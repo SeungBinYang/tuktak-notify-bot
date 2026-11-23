@@ -29,8 +29,8 @@
   "devDependencies": {
     "@types/express": "4.17.21",
     "@types/node": "22.10.7",
-    "cloudflared": "0.7.1",
-    "tsx": "4.19.2",
+    "cloudflared": "0.7.3",
+    "tsx": "4.23.15",
     "typescript": "5.7.3",
     "vitest": "3.0.5"
   },
