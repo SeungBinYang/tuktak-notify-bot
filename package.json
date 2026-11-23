@@ -1,0 +1,42 @@
+{
+  "name": "bootcamp-github-slack-bot",
+  "version": "0.1.0",
+  "description": "부트캠프 팀 GitHub 조직 이벤트를 슬랙으로 알리는 봇",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/src/index.js",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "seed:pilot": "tsx scripts/seed-pilot.ts",
+    "test:e2e": "npm run build && node dist/scripts/e2e.js",
+    "local": "tsx scripts/start-local.ts",
+    "poll": "tsx src/poll.ts",
+    "test:e2e-poll": "tsx scripts/e2e-poll.ts"
+  },
+  "dependencies": {
+    "@octokit/app": "15.1.2",
+    "@octokit/core": "6.1.6",
+    "@slack/bolt": "4.2.0",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node": "22.10.7",
+    "cloudflared": "0.7.1",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  }
+}

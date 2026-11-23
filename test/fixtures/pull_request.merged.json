@@ -1,0 +1,19 @@
+{
+  "action": "closed",
+  "installation": { "id": 1001 },
+  "sender": { "login": "wol20670", "type": "User" },
+  "repository": { "name": "Keepsy", "full_name": "tuktak-lab/Keepsy", "owner": { "login": "tuktak-lab" }, "html_url": "https://github.com/tuktak-lab/Keepsy" },
+  "pull_request": {
+    "number": 13,
+    "title": "fix: 버그 수정",
+    "html_url": "https://github.com/tuktak-lab/Keepsy/pull/13",
+    "draft": false,
+    "user": { "login": "tjtndud2" },
+    "head": { "ref": "fix/bug" },
+    "base": { "ref": "main" },
+    "merged": true,
+    "merged_at": "2026-11-23T10:00:00Z",
+    "merged_by": { "login": "wol20670" },
+    "merge_commit_sha": "aaaabbbbccccdddd0000111122223333aaaabbbb"
+  }
+}

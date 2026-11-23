@@ -1,0 +1,16 @@
+{
+  "action": "opened",
+  "installation": { "id": 1001 },
+  "sender": { "login": "yoosoo2217", "type": "User" },
+  "repository": { "name": "Keepsy", "full_name": "tuktak-lab/Keepsy", "owner": { "login": "tuktak-lab" }, "html_url": "https://github.com/tuktak-lab/Keepsy" },
+  "pull_request": {
+    "number": 12,
+    "title": "feat: 로그인 화면 <초안>",
+    "html_url": "https://github.com/tuktak-lab/Keepsy/pull/12",
+    "draft": false,
+    "user": { "login": "yoosoo2217" },
+    "head": { "ref": "feature/login" },
+    "base": { "ref": "develop" },
+    "merged": false
+  }
+}

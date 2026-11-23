@@ -1,0 +1,11 @@
+node_modules
+dist
+data
+secrets
+.env
+.git
+.learning
+coverage
+scripts/pilot-members.json
+*.pem
+*.db

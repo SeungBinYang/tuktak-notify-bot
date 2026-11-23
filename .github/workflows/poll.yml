@@ -1,0 +1,62 @@
+name: poll
+
+# 주 시계: 외부 크론(cron-job.org)이 정각 기준 5분마다 이 워크플로를 API로 실행한다(workflow_dispatch).
+# 예비 시계: GitHub 예약 실행. 지연·누락될 수 있지만 외부 크론이 멈춰도 확인이 이어지게 한다.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+# 동시에 두 번 돌지 않게 줄 세운다(상태 캐시가 꼬이지 않도록)
+concurrency:
+  group: poll
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: write # 아래 keepalive(워크플로 활성 유지)에 필요
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      # 지난 실행의 상태(DB)를 가져온다
+      - uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: bot-state-${{ github.run_id }}
+          restore-keys: bot-state-
+
+      - name: GitHub 확인 → 슬랙 알림
+        run: npx tsx src/poll.ts
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          OPS_CHANNEL_ID: ${{ secrets.OPS_CHANNEL_ID }}
+          PILOT_MEMBERS_JSON: ${{ secrets.PILOT_MEMBERS_JSON }}
+          STATE_DIR: state
+
+      # 이번 실행의 상태를 다음 실행에 넘긴다(실패해도 저장)
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: state
+          key: bot-state-${{ github.run_id }}-${{ github.run_attempt }}
+
+      # 공개 리포는 60일간 커밋이 없으면 예약 실행이 꺼진다. 매번 활성 상태로 다시 켜둔다.
+      - name: keepalive
+        if: always()
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/poll.yml/enable" || true
+        env:
+          GH_TOKEN: ${{ github.token }}
