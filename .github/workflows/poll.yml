@@ -31,7 +31,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
 
       # 지난 실행의 상태(DB)를 가져온다
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: state
           key: bot-state-${{ github.run_id }}
@@ -48,7 +48,7 @@ jobs:
           STATE_DIR: state
 
       # 이번 실행의 상태를 다음 실행에 넘긴다(실패해도 저장)
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6
         if: always()
         with:
           path: state
